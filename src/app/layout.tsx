@@ -6,7 +6,7 @@ import { type Metadata } from "next";
 export const metadata: Metadata = {
   title: "Test de Conducir",
   description: "Simula la experiencia de test de conducir",
-  icons: [{ rel: "icon", url: "/favicon.ico" }],
+  icons: [{ rel: "icon", url: (process.env.BASE_PATH ?? "") + "/favicon.ico" }],
   other: {
     "theme-color": "#fafafa",
   },

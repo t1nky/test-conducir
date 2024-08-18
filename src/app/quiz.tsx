@@ -174,7 +174,12 @@ export const Quiz = () => {
           </span>
         </div>
         <div className="flex flex-1 items-center justify-center bg-[radial-gradient(circle,var(--tw-gradient-stops))] from-neutral-600/90 to-transparent">
-          <Image src="/logo.webp" alt="Logo" width={40} height={40} />
+          <Image
+            src={(process.env.BASE_PATH ?? "") + "/logo.webp"}
+            alt="Logo"
+            width={40}
+            height={40}
+          />
         </div>
         <div className="flex flex-1 items-center justify-end gap-3">
           <span
