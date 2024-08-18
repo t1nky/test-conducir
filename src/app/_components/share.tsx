@@ -31,7 +31,7 @@ const ShareState = ({
     const url = new URL(window.location.origin);
     url.searchParams.set("state", compressedState);
     setShareUrl(url.toString());
-  }, []);
+  }, [getSerializedState]);
 
   return (
     <Dialog
@@ -84,9 +84,9 @@ const ShareState = ({
             <div className="mt-5 flex flex-col items-center justify-center gap-4">
               <QRCode value={shareUrl} />
               <button
-                onClick={() => {
+                onClick={async () => {
                   try {
-                    navigator.clipboard.writeText(shareUrl);
+                    await navigator.clipboard.writeText(shareUrl);
                   } catch (err) {
                     console.error(shareUrl, err);
                   }

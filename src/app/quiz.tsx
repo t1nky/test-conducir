@@ -67,7 +67,7 @@ export const Quiz = () => {
       }, 1000);
       return () => clearInterval(interval);
     }
-  }, [isPaused, timerActive]);
+  }, [isPaused, timerActive, timerTick]);
 
   const handleResponse = () => {
     if (selectedResponse !== null) {
@@ -216,6 +216,7 @@ export const Quiz = () => {
           <div className="flex flex-col gap-4">
             <div className="text-center text-lg">{currentQuestion.text}</div>
             {currentQuestion.img && (
+              // eslint-disable-next-line @next/next/no-img-element
               <img
                 src={currentQuestion.img}
                 alt={currentQuestion.text}

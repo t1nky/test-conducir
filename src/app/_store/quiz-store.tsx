@@ -71,7 +71,7 @@ export const createQuizStore = (initState: QuizState = defaultInitState) =>
 
           while (randomIndices.size < MAX_QUESTIONS) {
             const randomIndex = Math.floor(Math.random() * allQuestions.length);
-            const correctAnswers = questionStatistics[randomIndex] || 0;
+            const correctAnswers = questionStatistics[randomIndex] ?? 0;
             const probability = calculateProbability(correctAnswers);
 
             if (Math.random() <= probability) {
@@ -92,7 +92,7 @@ export const createQuizStore = (initState: QuizState = defaultInitState) =>
           });
         },
         selectResponse: (responseIndex: number) =>
-          set((state) => ({
+          set(() => ({
             selectedResponse: responseIndex,
           })),
         answerQuestion: (questionIndex: number, responseIndex: number) => {
@@ -133,11 +133,11 @@ export const createQuizStore = (initState: QuizState = defaultInitState) =>
             Object.values(get().answers).forEach((answerData) => {
               if (answerData.isCorrect) {
                 questionStatistics[answerData.questionIndex] =
-                  (questionStatistics[answerData.questionIndex] || 0) + 1;
+                  (questionStatistics[answerData.questionIndex] ?? 0) + 1;
               }
             });
 
-            set((state) => ({
+            set(() => ({
               timerActive: false,
               selectedResponse: null,
               questionStats: questionStatistics,
@@ -152,7 +152,7 @@ export const createQuizStore = (initState: QuizState = defaultInitState) =>
         getSerializedState: () => JSON.stringify(get()),
 
         setSerializedState: (serializedState: string) => {
-          const state = JSON.parse(serializedState);
+          const state = JSON.parse(serializedState) as QuizState;
           set(() => ({ ...state }));
         },
       }),

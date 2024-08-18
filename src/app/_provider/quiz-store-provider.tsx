@@ -1,10 +1,17 @@
 "use client";
 
 import { useRouter, useSearchParams } from "next/navigation";
-import { type ReactNode, createContext, useRef, useContext, useEffect } from "react";
+import {
+  type ReactNode,
+  createContext,
+  useRef,
+  useContext,
+  useEffect,
+} from "react";
 import { useStore } from "zustand";
 import lz from "lz-string";
 import {
+  type QuizState,
   type QuizStore,
   createQuizStore,
   defaultInitState,
@@ -35,15 +42,15 @@ export const QuizStoreProvider = ({ children }: QuizStoreProviderProps) => {
     storeRef.current.setState(
       JSON.parse(
         lz.decompressFromEncodedURIComponent(searchParams.get("state")!),
-      ),
+      ) as QuizState,
     );
   }
 
   useEffect(() => {
     if (searchParams.get("state")) {
-        router.replace("/", { scroll: false });
+      router.replace("/", { scroll: false });
     }
-  }, [searchParams.get("state")]);
+  }, [searchParams, router]);
 
   return (
     <QuizStoreContext.Provider value={storeRef.current}>
