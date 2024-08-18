@@ -27,7 +27,7 @@ export interface QuizStoreProviderProps {
   children: ReactNode;
 }
 
-export const QuizStoreProvider = ({ children }: QuizStoreProviderProps) => {
+const QuizStoreProvider = ({ children }: QuizStoreProviderProps) => {
   const storeRef = useRef<QuizStoreApi>();
 
   const searchParams = useSearchParams();
@@ -68,3 +68,5 @@ export const useQuizStore = <T,>(selector: (store: QuizStore) => T): T => {
 
   return useStore(quizStoreContext, selector);
 };
+
+export default QuizStoreProvider;

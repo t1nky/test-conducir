@@ -58,7 +58,7 @@ jobs:
       - name: Build with Next.js
         run: pnpm next build
         env:
-          ASSET_PREFIX: /test-conducir
+          ASSET_PREFIX: /test-conducir/
           BASE_PATH: /test-conducir
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3.0.1
