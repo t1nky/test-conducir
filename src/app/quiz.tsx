@@ -109,7 +109,7 @@ export const Quiz = () => {
           <h2 className="text-xl font-semibold">Tus respuestas:</h2>
           <div className="mt-4 space-y-4">
             {Object.entries(answers).map(([key, value], index) => {
-              const question = getQuestion(value.questionIndex);
+              const question = getQuestion(Number(key));
               const userAnswer = question.responses[value.responseIndex]!.text;
               const correctAnswer = question.responses.find(
                 (r) => r.correct,
