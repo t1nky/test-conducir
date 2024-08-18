@@ -144,7 +144,6 @@ export const Quiz = () => {
   }
 
   if (!initialized) {
-    console.log("not initialized", currentQuestionIndex, questions.length);
     return (
       <div className="flex h-svh w-full items-center justify-center">
         <button

@@ -27,7 +27,6 @@ const ShareState = ({
 
     const compressedState =
       lzString.compressToEncodedURIComponent(serializedState);
-    console.log(compressedState);
     const url = new URL(window.location.origin);
     url.searchParams.set("state", compressedState);
     setShareUrl(url.toString());
