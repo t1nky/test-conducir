@@ -2,6 +2,7 @@ import "~/styles/globals.css";
 
 import { GeistSans } from "geist/font/sans";
 import { type Metadata } from "next";
+import BackgroundGrid from "./_components/background-grid";
 
 export const metadata: Metadata = {
   title: "Test de Conducir",
@@ -17,7 +18,12 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="es" className={`${GeistSans.variable} bg-neutral-50`}>
-      <body>{children}</body>
+      <body>
+        {children}
+        <div className="absolute inset-0 -z-10">
+          <BackgroundGrid />
+        </div>
+      </body>
     </html>
   );
 }

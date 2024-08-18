@@ -15,6 +15,7 @@ import { cn } from "~/util/cn";
 import Image from "next/image";
 import ShareState from "./_components/share";
 import { useSearchParams } from "next/navigation";
+import QuestionImage from "./_components/question-image";
 
 function ResponseIcon({
   isCorrect,
@@ -55,7 +56,6 @@ export const Quiz = () => {
     storeInitialized,
   } = useQuizStore((state) => state);
 
-  const [imageZoomed, setImageZoomed] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
 
   const searchParams = useSearchParams();
@@ -220,16 +220,7 @@ export const Quiz = () => {
           <div className="flex flex-col gap-4">
             <div className="text-center text-lg">{currentQuestion.text}</div>
             {currentQuestion.img && (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img
-                src={currentQuestion.img}
-                alt={currentQuestion.text}
-                className={cn(
-                  "mx-auto max-h-96 w-3/4 rounded-lg object-contain transition-all duration-200",
-                  imageZoomed && "z-10 w-full scale-105",
-                )}
-                onClick={() => setImageZoomed((imageZoomed) => !imageZoomed)}
-              />
+              <QuestionImage src={currentQuestion.img} alt={"question image"} />
             )}
             <div className="h-8">
               {isCorrect != null && (
