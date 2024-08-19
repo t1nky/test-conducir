@@ -178,9 +178,10 @@ export const Quiz = () => {
             alt="Logo"
             width={40}
             height={40}
+            className="max-h-8 max-w-8 md:max-h-10 md:max-w-10"
           />
         </div>
-        <div className="flex flex-1 items-center justify-end gap-3">
+        <div className="flex flex-1 items-center justify-end gap-3 text-sm md:text-base">
           <span
             className={cn(
               timer <= 0
