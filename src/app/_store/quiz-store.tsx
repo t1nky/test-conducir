@@ -33,6 +33,8 @@ export interface QuizState {
 
 export interface QuizActions {
   startQuiz: (allQuestions: Question[]) => void;
+  startFullQuiz: (allQuestions: Question[]) => void;
+  resetQuiz: () => void;
   answerQuestion: (questionIndex: number, responseIndex: number) => void;
   selectResponse: (responseIndex: number) => void;
   nextQuestion: () => void;
@@ -89,6 +91,38 @@ export const createQuizStore = (initState: QuizState = defaultInitState) =>
             isPaused: false,
             timer: QUIZ_TIMER,
             timerActive: true,
+          });
+        },
+        startFullQuiz: (allQuestions: Question[]) => {
+          const indices = allQuestions.map((_, i) => i);
+          for (let i = indices.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [indices[i], indices[j]] = [indices[j]!, indices[i]!];
+          }
+
+          set({
+            questions: indices,
+            currentQuestionIndex: 0,
+            correctCount: 0,
+            answers: {},
+            selectedResponse: null,
+            isCorrect: null,
+            isPaused: false,
+            timer: 0,
+            timerActive: false,
+          });
+        },
+        resetQuiz: () => {
+          set({
+            questions: [],
+            currentQuestionIndex: -1,
+            correctCount: 0,
+            answers: {},
+            selectedResponse: null,
+            isCorrect: null,
+            isPaused: false,
+            timer: QUIZ_TIMER,
+            timerActive: false,
           });
         },
         selectResponse: (responseIndex: number) =>

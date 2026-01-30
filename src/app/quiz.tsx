@@ -53,6 +53,8 @@ export const Quiz = () => {
     timerTick,
     getQuestion,
     startQuiz,
+    startFullQuiz,
+    resetQuiz,
     storeInitialized,
   } = useQuizStore((state) => state);
 
@@ -101,7 +103,7 @@ export const Quiz = () => {
         </p>
         <button
           className="mt-8 rounded bg-green-500 px-4 py-2 text-white"
-          onClick={() => startQuiz(allQuestions.questions)}
+          onClick={resetQuiz}
         >
           Reiniciar Quiz
         </button>
@@ -144,12 +146,20 @@ export const Quiz = () => {
 
   if (!initialized) {
     return (
-      <div className="flex h-svh w-full items-center justify-center">
+      <div className="flex h-svh w-full flex-col items-center justify-center gap-4">
         <button
-          className="relative h-8 overflow-hidden rounded-full border border-green-700 bg-white px-2 text-green-700 shadow-2xl transition-all before:absolute before:bottom-0 before:left-0 before:top-0 before:z-0 before:h-full before:w-0 before:bg-green-700 before:transition-all before:duration-500 hover:border-green-700 hover:text-white hover:shadow-green-700 hover:before:left-0 hover:before:w-full"
+          className="relative h-8 overflow-hidden rounded-full border border-green-700 bg-white px-4 text-green-700 shadow-2xl transition-all before:absolute before:bottom-0 before:left-0 before:top-0 before:z-0 before:h-full before:w-0 before:bg-green-700 before:transition-all before:duration-500 hover:border-green-700 hover:text-white hover:shadow-green-700 hover:before:left-0 hover:before:w-full"
           onClick={() => startQuiz(allQuestions.questions)}
         >
-          <span className="relative z-10">Iniciar Quiz </span>
+          <span className="relative z-10">Iniciar Quiz (40 preguntas)</span>
+        </button>
+        <button
+          className="relative h-8 overflow-hidden rounded-full border border-indigo-600 bg-white px-4 text-indigo-600 shadow-2xl transition-all before:absolute before:bottom-0 before:left-0 before:top-0 before:z-0 before:h-full before:w-0 before:bg-indigo-600 before:transition-all before:duration-500 hover:border-indigo-600 hover:text-white hover:shadow-indigo-600 hover:before:left-0 hover:before:w-full"
+          onClick={() => startFullQuiz(allQuestions.questions)}
+        >
+          <span className="relative z-10">
+            Todas las preguntas ({allQuestions.questions.length})
+          </span>
         </button>
       </div>
     );
@@ -162,7 +172,7 @@ export const Quiz = () => {
         <div className="flex flex-1 items-center gap-3">
           <button
             className="relative flex size-8 items-center justify-center overflow-hidden rounded-full border border-gray-500 bg-white text-gray-500 shadow-2xl transition-all before:absolute before:bottom-0 before:left-0 before:top-0 before:z-0 before:h-full before:w-0 before:bg-red-400 before:transition-all before:duration-500 hover:border-red-400 hover:text-white hover:shadow-red-400 hover:before:left-0 hover:before:w-full"
-            onClick={() => startQuiz(allQuestions.questions)}
+            onClick={resetQuiz}
           >
             <span className="relative z-10">
               <ArrowPathIcon className="h-4 w-4" />
@@ -182,31 +192,35 @@ export const Quiz = () => {
           />
         </div>
         <div className="flex flex-1 items-center justify-end gap-3 text-sm md:text-base">
-          <span
-            className={cn(
-              timer <= 0
-                ? "text-red-500"
-                : timer <= 300
-                  ? "text-orange-500"
-                  : "text-black",
-            )}
-          >
-            {isPaused
-              ? "Pausado"
-              : `${Math.floor(timer / 60)}:${(timer % 60).toString().padStart(2, "0")}`}
-          </span>
-          <button
-            className="relative flex size-8 items-center justify-center overflow-hidden rounded-full border border-gray-500 bg-white px-2 text-gray-500 shadow-2xl transition-all before:absolute before:bottom-0 before:left-0 before:top-0 before:z-0 before:h-full before:w-0 before:bg-blue-400 before:transition-all before:duration-500 hover:border-blue-400 hover:text-white hover:shadow-blue-400 hover:before:left-0 hover:before:w-full"
-            onClick={togglePause}
-          >
-            <span className="relative z-10">
-              {isPaused ? (
-                <PlayIcon className="h-4 w-4" />
-              ) : (
-                <PauseIcon className="h-4 w-4" />
-              )}
-            </span>
-          </button>
+          {questions.length === 40 && (
+            <>
+              <span
+                className={cn(
+                  timer <= 0
+                    ? "text-red-500"
+                    : timer <= 300
+                      ? "text-orange-500"
+                      : "text-black",
+                )}
+              >
+                {isPaused
+                  ? "Pausado"
+                  : `${Math.floor(timer / 60)}:${(timer % 60).toString().padStart(2, "0")}`}
+              </span>
+              <button
+                className="relative flex size-8 items-center justify-center overflow-hidden rounded-full border border-gray-500 bg-white px-2 text-gray-500 shadow-2xl transition-all before:absolute before:bottom-0 before:left-0 before:top-0 before:z-0 before:h-full before:w-0 before:bg-blue-400 before:transition-all before:duration-500 hover:border-blue-400 hover:text-white hover:shadow-blue-400 hover:before:left-0 hover:before:w-full"
+                onClick={togglePause}
+              >
+                <span className="relative z-10">
+                  {isPaused ? (
+                    <PlayIcon className="h-4 w-4" />
+                  ) : (
+                    <PauseIcon className="h-4 w-4" />
+                  )}
+                </span>
+              </button>
+            </>
+          )}
           <button
             className="relative flex size-8 items-center justify-center overflow-hidden rounded-full border border-gray-500 bg-white px-2 text-gray-500 shadow-2xl transition-all before:absolute before:bottom-0 before:left-0 before:top-0 before:z-0 before:h-full before:w-0 before:bg-indigo-500 before:transition-all before:duration-500 hover:border-indigo-500 hover:text-white hover:shadow-indigo-500 hover:before:left-0 hover:before:w-full"
             onClick={() => setIsOpen(true)}
